@@ -1,0 +1,139 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>show_widget</title>
+</head>
+<body>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Outfit:wght@500;600&family=Urbanist:wght@300&family=Noto+Sans+SC:wght@400;500&display=swap');
+.stage{position:relative;display:flex;flex-direction:column;height:620px;overflow:hidden;border-radius:18px;
+font-family:'Inter',ui-sans-serif,system-ui,sans-serif;cursor:pointer;touch-action:manipulation;
+background:#F7F0E3;transition:background 1.2s ease;}
+.stage.state-lo{background:#E9E9EB;}
+.hero{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;position:relative;}
+.stack{display:grid;place-items:center;opacity:0;transform:scale(.985);transition:opacity 1.1s ease,transform 1.1s ease;}
+.stage.ready .stack{opacity:1;transform:none;}
+.word{grid-area:1/1;white-space:nowrap;line-height:1;user-select:none;
+transition:opacity .9s ease,transform 1s cubic-bezier(.22,.8,.24,1);}
+.le{font-family:'Poppins',sans-serif;font-weight:600;letter-spacing:-.01em;font-size:clamp(52px,13vw,160px);}
+.lo{font-family:'Outfit',sans-serif;font-weight:600;letter-spacing:-.015em;font-size:clamp(52px,13vw,160px);}
+.solid-le{color:#211e1a;z-index:2;}
+.solid-lo{color:#232329;z-index:2;}
+.ghost{color:transparent;z-index:1;}
+.state-le .solid-le{opacity:1;transform:translate(0,0);}
+.state-le .ghost-le{opacity:0;transform:translate(0,0);}
+.state-le .solid-lo{opacity:0;transform:translate(.08em,.1em);}
+.state-le .ghost-lo{opacity:.5;transform:translate(.08em,.1em);}
+.state-lo .solid-lo{opacity:1;transform:translate(0,0);}
+.state-lo .ghost-lo{opacity:0;transform:translate(0,0);}
+.state-lo .solid-le{opacity:0;transform:translate(.08em,.1em);}
+.state-lo .ghost-le{opacity:.5;transform:translate(.08em,.1em);}
+.state-le .ghost{-webkit-text-stroke:1.5px rgba(35,35,41,.55);}
+.state-lo .ghost{-webkit-text-stroke:1.5px rgba(33,30,26,.5);}
+.caption{position:relative;height:20px;margin-top:36px;min-width:340px;}
+.cap{position:absolute;left:0;right:0;text-align:center;font-size:12px;font-weight:400;white-space:nowrap;
+opacity:0;transform:translateY(6px);transition:opacity .7s ease,transform .7s ease;}
+.state-le .cap{color:rgba(33,30,26,.52);}
+.state-lo .cap{color:rgba(35,35,41,.52);}
+.state-le .cap-le,.state-lo .cap-lo{opacity:1;transform:none;}
+.cap .zhn{font-family:'Noto Sans SC',sans-serif;letter-spacing:.22em;}
+.cap .sep{margin:0 .75em;opacity:.5;}
+.cap-le .slg{font-family:'Poppins',sans-serif;font-weight:500;letter-spacing:.05em;}
+.cap-lo .slg{font-family:'Outfit',sans-serif;font-weight:500;letter-spacing:.04em;}
+.dots{display:flex;gap:14px;justify-content:center;padding-bottom:26px;}
+.dotb{width:22px;height:22px;border:0;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;}
+.dotb i{width:7px;height:7px;border-radius:50%;display:block;transition:background .5s,border-color .5s;}
+.state-le .dotb i{border:1px solid rgba(33,30,26,.4);}
+.state-lo .dotb i{border:1px solid rgba(35,35,41,.4);}
+.state-le .dot-le i{background:rgba(33,30,26,.85);}
+.state-lo .dot-lo i{background:rgba(35,35,41,.85);}
+.hint{position:absolute;left:0;right:0;bottom:76px;text-align:center;font-size:10px;letter-spacing:.4em;text-indent:.4em;
+opacity:.35;transition:opacity 1s;pointer-events:none;font-family:'Noto Sans SC',sans-serif;}
+.state-le .hint{color:#211e1a;}
+.state-lo .hint{color:#232329;}
+.stage.touched .hint{opacity:0;}
+.basebar{height:46px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+border-top:1px solid rgba(0,0,0,.05);transition:border-color 1.2s;}
+.state-lo .basebar{border-top-color:rgba(0,0,0,.07);}
+.basebar span{font-family:'Urbanist',sans-serif;font-size:11px;font-weight:300;letter-spacing:.25em;text-indent:.25em;transition:color 1.2s;}
+.state-le .basebar span{color:rgba(33,30,26,.3);}
+.state-lo .basebar span{color:rgba(35,35,41,.34);}
+.basebar:hover span{color:rgba(0,0,0,.6) !important;}
+@media (max-width:560px){.word{font-size:clamp(46px,16.5vw,92px);}.caption{min-width:0;}}
+@media (prefers-reduced-motion:reduce){*{transition:none !important;}}
+</style>
+
+<div class="stage state-le" id="stage">
+  <div class="hero">
+    <div>
+      <div class="stack">
+        <span class="word le ghost ghost-le">lesong</span>
+        <span class="word lo ghost ghost-lo">Loson</span>
+        <span class="word le solid-le">lesong</span>
+        <span class="word lo solid-lo">Loson</span>
+      </div>
+      <div class="caption">
+        <span class="cap cap-le"><span class="zhn">乐颂</span><span class="sep">·</span><span class="slg">craft deserves a song</span></span>
+        <span class="cap cap-lo"><span class="zhn">洛松</span><span class="sep">·</span><span class="slg">Logic in, Sonic out</span></span>
+      </div>
+    </div>
+  </div>
+  <div class="hint">轻 点 任 意 处 · 主 影 互 换</div>
+  <div class="dots">
+    <button class="dotb dot-le" id="dotL" aria-label="lesong"><i></i></button>
+    <button class="dotb dot-lo" id="dotR" aria-label="Loson"><i></i></button>
+  </div>
+  <div class="basebar"><span>longqiyua</span></div>
+</div>
+
+<script>
+var stage=document.getElementById('stage');
+var state='le';
+function set(s){
+  state=s;
+  stage.classList.toggle('state-le',s==='le');
+  stage.classList.toggle('state-lo',s==='lo');
+  stage.classList.add('touched');
+}
+stage.addEventListener('click',function(e){
+  set(state==='le'?'lo':'le');
+});
+document.getElementById('dotL').addEventListener('click',function(e){e.stopPropagation();set('le');});
+document.getElementById('dotR').addEventListener('click',function(e){e.stopPropagation();set('lo');});
+setTimeout(function(){stage.classList.add('ready');},60);
+</script><script data-tabbit-widget-diagnostics="true">
+(function(){
+  if (window.__tabbitWidgetDiagnosticsInstalled) return;
+  window.__tabbitWidgetDiagnosticsInstalled = true;
+  window.__TABBIT_WIDGET_ERRORS__ = window.__TABBIT_WIDGET_ERRORS__ || [];
+  function emit(level, args) {
+    var payload = {
+      type: "tabbit_widget_diagnostics",
+      level: level,
+      message: Array.prototype.slice.call(args || []).map(function(item) {
+        if (item && item.stack) return item.stack;
+        if (typeof item === "string") return item;
+        try { return JSON.stringify(item); } catch (_) { return String(item); }
+      }).join(" "),
+      timestamp: Date.now()
+    };
+    window.__TABBIT_WIDGET_ERRORS__.push(payload);
+    try { window.parent && window.parent.postMessage(payload, "*"); } catch (_) {}
+  }
+  var originalError = console.error;
+  console.error = function() {
+    emit("error", arguments);
+    return originalError && originalError.apply(console, arguments);
+  };
+  window.addEventListener("error", function(event) {
+    emit("error", [event.message || "Script error", event.filename || "", event.lineno || ""]);
+  });
+  window.addEventListener("unhandledrejection", function(event) {
+    emit("unhandledrejection", [event.reason || "Unhandled promise rejection"]);
+  });
+})();
+</script>
+</body>
+</html>
