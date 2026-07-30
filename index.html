@@ -13,6 +13,13 @@
     padding: 0;
     width: 100%;
     height: 100%;
+    /* 屏蔽全页面的文本选中（兼容各类浏览器与移动端长按） */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    /* 禁用移动端长按弹出菜单 / 呼出选择放大镜 */
+    -webkit-touch-callout: none;
   }
 
   /* 2. 将 height: 620px 改为 min-height: 100vh */
@@ -109,7 +116,7 @@
       </div>
     </div>
   </div>
-  <div class="hint">轻 点 任 意 处 · 主 影 互 换</div>
+  <div class="hint"></div>
   <div class="dots">
     <button class="dotb dot-le" id="dotL" aria-label="lesong"><i></i></button>
     <button class="dotb dot-lo" id="dotR" aria-label="Loson"><i></i></button>
@@ -118,6 +125,10 @@
 </div>
 
 <script>
+// 阻止选择事件及拖拽选择行为
+document.addEventListener('selectstart', function(e) { e.preventDefault(); });
+document.addEventListener('dragstart', function(e) { e.preventDefault(); });
+
 var stage = document.getElementById('stage');
 var state = 'le';
 function set(s) {
