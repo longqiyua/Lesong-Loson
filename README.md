@@ -1,2 +1,2 @@
-# Lesong&Loson
+# lesong&Loson
 Just a brief introduction
